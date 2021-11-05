@@ -35,7 +35,7 @@ public class Fraction
     
     /**
      * Creates a Fraction from a formatted String.
-     * @param frac String fraction in the format "num/den"
+     * @param frac a String representing a fraction, in the format "num/den"
      */
     
     public Fraction(String frac)
@@ -44,6 +44,11 @@ public class Fraction
         setDen(Integer.parseInt(frac.substring(frac.indexOf("/") + 1)));
     }
     
+    /**
+     * Creates a Fraction with numerator and denominator values copied from Fraction frac.
+     * @param frac the Fraction to be copied
+     */
+    
     public Fraction(Fraction frac)
     {
         num = frac.num;
@@ -51,12 +56,14 @@ public class Fraction
     }
     
     /**
-     * Returns a simplified version of the fraction.
+     * Returns a simplified version of the specified Fraction.
+     * @param frac the Fraction to be simplified
+     * @return the simplified Fraction
      */
     
-    public Fraction simplify()
+    public static Fraction simplify(Fraction frac)
     {
-        int n = num, d = den;
+        int n = frac.num, d = frac.den;
         
         for(int i = Math.min(n, d); i >= 2; i--)
         {
@@ -71,15 +78,47 @@ public class Fraction
         return new Fraction(n, d);
     }
     
+    /**
+     * Returns a String representation of the Fraction, formatted as "num/den".
+     * @return the Fraction represented as a String
+     */
+    
     public String toString() { return num + "/" + den; }
     
+    /**
+     * Returns the result of the integer division between the numerator and denominator.
+     * @return integer representation
+     */
     public int getIntValue() { return num / den; }
+    /**
+     * Returns the remainder of the integer division between the numerator and denominator.
+     * @return remainder
+     */
     public int getRemainder() { return num % den; }
+    /**
+     * Returns the result of the double division between the numerator and denominator.
+     * @return double representation
+     */
     public double getDoubleValue() { return (double) num / den; }
-    
+    /**
+     * Returns the numerator of the Fraction.
+     * @return numerator
+     */
     public int getNum() { return num; }
+    /**
+     * Returns the denominator of the Fraction.
+     * @return denominator
+     */
     public int getDen() { return den; }
+    /**
+     * Assigns the numerator of the Fraction.
+     * @param value to be set
+     */
     public void setNum(int num) { this.num = num; }
+    /**
+     * Assigns the denominator of the Fraction. Handles non-zero values.
+     * @param value to be set
+     */
     public void setDen(int den)
     {
         if(den == 0) System.out.println("Denominator cannot be 0.");
