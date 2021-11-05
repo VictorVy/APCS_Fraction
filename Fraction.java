@@ -14,7 +14,6 @@ public class Fraction
     /**
      * Creates a Fraction with numerator 0 and denominator 1.
      */
-    
     public Fraction()
     {
         num = 0;
@@ -26,7 +25,6 @@ public class Fraction
      * @param num the numerator of the fraction
      * @param dec the denominator of the fraction
      */
-    
     public Fraction(int num, int den)
     {
         this.num = num;
@@ -37,18 +35,17 @@ public class Fraction
      * Creates a Fraction from a formatted String.
      * @param frac a String representing a fraction, in the format "num/den"
      */
-    
     public Fraction(String frac)
     {
-        num = Integer.parseInt(frac.substring(0, frac.indexOf("/")));
-        setDen(Integer.parseInt(frac.substring(frac.indexOf("/") + 1)));
+        Fraction parsed = parseFrac(frac);
+        num = parsed.num;
+        den = parsed.den;
     }
     
     /**
      * Creates a Fraction with numerator and denominator values copied from Fraction frac.
      * @param frac the Fraction to be copied
      */
-    
     public Fraction(Fraction frac)
     {
         num = frac.num;
@@ -60,7 +57,6 @@ public class Fraction
      * @param frac the Fraction to be simplified
      * @return the simplified Fraction
      */
-    
     public static Fraction simplify(Fraction frac)
     {
         int n = frac.num, d = frac.den;
@@ -79,17 +75,82 @@ public class Fraction
     }
     
     /**
+     * Returns a simplified version of the String-respresented Fraction.
+     * @param frac the String Fraction, formatted as "num/den", to be simplified
+     * @return the simplified Fraction
+     */
+    public static Fraction simplify(String frac) { return simplify(parseFrac(frac)); }
+    
+    // /**
+     // * Adds two Fractions and returns the simplified sum.
+     // * @param a the first Fraction to be added
+     // * @param a the second Fraction to be added
+     // */
+    // public static Fraction add(Fraction a, Fraction b) 
+    // {
+        
+    // }
+    
+    /**
+     * Multiplies two Fractions and returns the simplified product.
+     * @param a the first Fraction to be multiplied
+     * @param a the second Fraction to be multiplied
+     */
+    public static Fraction multiply(Fraction a, Fraction b) { return simplify(new Fraction(a.num * b.num, a.den * b.den)); }
+    
+    /**
+     * Multiplies the Fraction with another specified Fraction.
+     * @param frac the Fraction to multiply with
+     */
+    public void multiply(Fraction frac) 
+    {
+        num *= frac.num;
+        den *= frac.den;
+    }
+    
+    /**
+     * Divides the Fraction by another specified Fraction.
+     * @param frac the Fraction to divide by
+     */
+    public void divide(Fraction frac) 
+    {
+        num /= frac.num;
+        den /= frac.den;
+    }
+    
+    /**
+     * Divides two Fractions and returns the simplified quotient.
+     * @param a the dividend Fraction
+     * @param a the divisor Fraction
+     */
+    public static Fraction divide(Fraction a, Fraction b) { return simplify(new Fraction(a.num / b.num, a.den / b.den)); }
+    
+    /**
+     * Parses a String in the format "num/den", returning the represented Fraction.
+     * @param frac a String representing a fraction, in the format "num/den" 
+     */
+    public static Fraction parseFrac(String frac)
+    {
+        return new Fraction(Integer.parseInt(frac.substring(0, frac.indexOf("/"))),
+                            Integer.parseInt(frac.substring(frac.indexOf("/") + 1)));
+    }
+    
+    /**
      * Returns a String representation of the Fraction, formatted as "num/den".
      * @return the Fraction represented as a String
      */
-    
     public String toString() { return num + "/" + den; }
+    
+    /**
+     * 
+     */
     
     /**
      * Returns the result of the integer division between the numerator and denominator.
      * @return integer representation
      */
     public int getIntValue() { return num / den; }
+    
     /**
      * Returns the remainder of the integer division between the numerator and denominator.
      * @return remainder
