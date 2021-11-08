@@ -53,25 +53,29 @@ public class Fraction
     }
     
     /**
+     * Returns the greatest common factor of two specified integers
+     * @param a the first integer
+     * @param b the second integer
+     */
+    
+    private static int gcf(int a, int b)
+    {
+        if(b == 0) return a;
+        return gcf(b, a % b);
+    }
+    
+    /**
      * Returns a simplified version of the specified Fraction.
      * @param frac the Fraction to be simplified
      * @return the simplified Fraction
      */
     public static Fraction simplify(Fraction frac)
     {
-        int n = frac.num, d = frac.den;
+        int n = Math.abs(frac.num), d = Math.abs(frac.den);
+        int l = Math.max(n, d), s = Math.min(n, d);
+        int gcf = gcf(frac.num, frac.den);
         
-        for(int i = Math.min(n, d); i >= 2; i--)
-        {
-            if(n % i == 0 && d % i == 0)
-            {
-                n /= i;
-                d /= i;
-                break;
-            }
-        }
-        
-        return new Fraction(n, d);
+        return new Fraction(frac.num / gcf, frac.den / gcf);
     }
     
     /**
@@ -81,15 +85,19 @@ public class Fraction
      */
     public static Fraction simplify(String frac) { return simplify(parseFrac(frac)); }
     
-    // /**
-     // * Adds two Fractions and returns the simplified sum.
-     // * @param a the first Fraction to be added
-     // * @param a the second Fraction to be added
-     // */
-    // public static Fraction add(Fraction a, Fraction b) 
-    // {
-        
-    // }
+    /**
+     * Adds two Fractions and returns the simplified sum.
+     * @param a the first Fraction to be added
+     * @param a the second Fraction to be added
+     */
+    public static Fraction add(Fraction a, Fraction b) { return simplify(new Fraction(a.num * b.den + b.num * a.den, a.den * b.den)); }
+    
+    /**
+     * Subtracts two Fractions and returns the simplified difference.
+     * @param a the Fraction to be subtracted from
+     * @param a the subtracting Fraction
+     */
+    public static Fraction subtract(Fraction a, Fraction b) { return simplify(new Fraction(a.num * b.den - b.num * a.den, a.den * b.den)); }
     
     /**
      * Multiplies two Fractions and returns the simplified product.
@@ -109,6 +117,13 @@ public class Fraction
     }
     
     /**
+     * Divides two Fractions and returns the simplified quotient.
+     * @param a the dividend Fraction
+     * @param a the divisor Fraction
+     */
+    public static Fraction divide(Fraction a, Fraction b) { return simplify(new Fraction(a.num / b.num, a.den / b.den)); }
+    
+    /**
      * Divides the Fraction by another specified Fraction.
      * @param frac the Fraction to divide by
      */
@@ -117,13 +132,6 @@ public class Fraction
         num /= frac.num;
         den /= frac.den;
     }
-    
-    /**
-     * Divides two Fractions and returns the simplified quotient.
-     * @param a the dividend Fraction
-     * @param a the divisor Fraction
-     */
-    public static Fraction divide(Fraction a, Fraction b) { return simplify(new Fraction(a.num / b.num, a.den / b.den)); }
     
     /**
      * Parses a String in the format "num/den", returning the represented Fraction.
